@@ -1,0 +1,11 @@
+name: Confluence Markdown sync
+description: Sync Markdown files from the checked-out repository to existing Confluence pages.
+
+inputs:
+  banner:
+    description: Optional banner injected on top of the page on cofluence. Signals page is auto-generated and should not be edited
+    required: false
+
+runs:
+  using: node24
+  main: dist/index.js

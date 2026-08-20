@@ -1,0 +1,20 @@
+{
+  "name": "github-confluence-action",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "ncc build src/main.ts -o dist",
+    "check": "tsc --noEmit",
+    "test": "vitest run --config vitest.projects.ts"
+  },
+  "dependencies": {
+    "gray-matter": "4.0.3"
+  },
+  "devDependencies": {
+    "@types/node": "25.9.2",
+    "@vercel/ncc": "0.38.4",
+    "typescript": "6.0.3",
+    "vitest": "4.1.2"
+  },
+  "packageManager": "pnpm@10.20.0"
+}
