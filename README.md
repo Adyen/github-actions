@@ -8,7 +8,7 @@ This repository provides shared automation that can be consumed from GitHub Acti
 
 | Action | Description |
 | :---- | :---- |
-| [`markdown-confluence-sync`](http://./markdown-confluence-sync) | Sync Markdown documentation to Confluence. |
+| [`markdown-confluence-sync`](./markdown-confluence-sync) | Sync Markdown documentation to Confluence. |
 
 ## Usage
 
@@ -25,8 +25,6 @@ steps:
   - uses: actions/checkout@v4
 
   - uses: Adyen/github-actions-internal/markdown-confluence-sync@v1
-    with:
-      source: docs/
 ```
 
 See the README for each action for its supported inputs, outputs, permissions, and secrets.

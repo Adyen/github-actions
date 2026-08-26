@@ -24,7 +24,7 @@ jobs:
     environment: confluence-docs
     steps:
       - uses: actions/checkout@<pinned-SHA>
-      - uses: ./.github/actions/confluence-markdown-sync
+      - uses: Adyen/github-actions-internal/markdown-confluence-sync@v1
         env:
           CONFLUENCE_BASE_URL: ${{ secrets.CONFLUENCE_BASE_URL }}
           CONFLUENCE_EMAIL: ${{ secrets.CONFLUENCE_EMAIL }}
