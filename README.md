@@ -22,7 +22,7 @@ For example:
 
 ```
 steps:
-  - uses: actions/checkout@v4
+  - uses: actions/checkout@v7
 
   - uses: Adyen/github-actions-internal/markdown-confluence-sync@v1
 ```
