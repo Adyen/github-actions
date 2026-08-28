@@ -3,7 +3,7 @@ description: Sync Markdown files from the checked-out repository to existing Con
 
 inputs:
   banner:
-    description: Optional banner injected on top of the page on cofluence. Signals page is auto-generated and should not be edited
+    description: Optional banner injected on top of the page on Confluence. Signals page is auto-generated and should not be edited
     required: false
 
 runs:
