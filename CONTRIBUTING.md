@@ -3,7 +3,7 @@
 The following is a set of guidelines for contributing to Adyen and its repositories, which are hosted in the [Adyen Organization](https://github.com/adyen) on GitHub. These are mostly guidelines, not rules.
 
 ## Code of Conduct
-This project and everyone participating in it is governed by the [Adyen Code of Conduct](CODE_OF_CONDUCT.md). By participating, you are expected to uphold this code.
+This project and everyone participating in it is governed by the [Adyen Code of Conduct](https://github.com/adyen/.github/blob/main/CODE_OF_CONDUCT.md). By participating, you are expected to uphold this code.
  
 ## How to contribute
 1. Fork the repository.
