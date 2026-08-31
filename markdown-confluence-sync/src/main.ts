@@ -1,25 +1,21 @@
 import { updateConfluencePage } from './confluence-client';
 import { discoverConfluenceDocuments } from './documents';
-import { markdownToConfluenceStorage } from './markdown';
-
-/** Atlassian formatted banner */
-const DEFAULT_BANNER =
-  '<ac:structured-macro ac:name="warning"><ac:rich-text-body><p><strong>Auto-generated from GitHub. Do not manually edit.</strong>';
+import { markdownToConfluenceAdf, prependWarningBanner } from './markdown';
 
 const syncDocumentationToConfluence = async () => {
   const documents = await discoverConfluenceDocuments(process.cwd());
 
   await Promise.all(
     documents.map(async (document) => {
-      const converted = markdownToConfluenceStorage(document.markdown);
+      const converted = markdownToConfluenceAdf(document.markdown);
       const sourceUrl = `${process.env.GITHUB_SERVER_URL}/${process.env.GITHUB_REPOSITORY}/blob/${process.env.GITHUB_SHA}/${document.source}`;
       const banner =
         process.env.INPUT_BANNER ||
-        `${DEFAULT_BANNER} <a href="${sourceUrl}">Source on GitHub</a>.</p></ac:rich-text-body></ac:structured-macro>`;
-      const storage = [banner, converted.storage].filter(Boolean).join('\n');
+        `**Auto-generated from GitHub. Do not manually edit.** [Source on GitHub](${sourceUrl}).`;
+      const body = prependWarningBanner(converted, banner);
 
       try {
-        await updateConfluencePage(document.pageId, { storage, title: document.title });
+        await updateConfluencePage(document.pageId, { body, title: document.title });
         console.log(`Synced from ${document.source} to Confluence page ${document.pageId}`);
       } catch (error) {
         const message = error instanceof Error ? error.message : `${error}`;

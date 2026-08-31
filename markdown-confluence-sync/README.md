@@ -74,4 +74,4 @@ jobs:
 
 | Input | Default | Description |
 | --- | --- | --- |
-| `banner` | Auto-generated warning with a source link | Signals that the page should not be manually edited on Confluence. |
+| `banner` | Auto-generated warning with a source link | Optional Markdown warning banner injected at the top of the page. |

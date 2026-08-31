@@ -1,9 +1,11 @@
+import type { AdfDocument } from './markdown';
+
 interface ConfluencePage {
   version: { number: number };
 }
 
 interface UpdateConfluencePageInput {
-  storage: string;
+  body: AdfDocument;
   title: string;
 }
 
@@ -61,7 +63,7 @@ const request = async <T>(requestPath: string, options: RequestInit = {}): Promi
 
 export const updateConfluencePage = async (
   pageId: string,
-  { storage, title }: UpdateConfluencePageInput,
+  { body, title }: UpdateConfluencePageInput,
 ): Promise<ConfluencePage> => {
   const page = await request<ConfluencePage>(`/pages/${encodeURIComponent(pageId)}`);
 
@@ -73,7 +75,7 @@ export const updateConfluencePage = async (
       status: 'current',
       title,
       version: { number: page.version.number + 1 },
-      body: { representation: 'storage', value: storage },
+      body: { representation: 'atlas_doc_format', value: JSON.stringify(body) },
     }),
   });
 };

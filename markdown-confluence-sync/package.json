@@ -3,17 +3,18 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "build": "ncc build src/main.ts -o dist",
+    "build": "ncc build src/main.ts -o dist --minify",
     "check": "tsc --noEmit",
     "test": "vitest run --config vitest.projects.ts"
   },
   "dependencies": {
-    "gray-matter": "4.0.3"
+    "gray-matter": "4.0.3",
+    "marklassian": "1.2.1"
   },
   "devDependencies": {
     "@types/node": "24.13.3",
     "@vercel/ncc": "0.44.1",
-    "typescript": "7.0.2",
+    "typescript": "6.0.3",
     "vitest": "4.1.10"
   },
   "packageManager": "pnpm@10.34.5"
