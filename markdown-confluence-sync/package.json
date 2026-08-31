@@ -11,10 +11,10 @@
     "gray-matter": "4.0.3"
   },
   "devDependencies": {
-    "@types/node": "25.9.5",
-    "@vercel/ncc": "0.45.0",
+    "@types/node": "24.13.3",
+    "@vercel/ncc": "0.44.1",
     "typescript": "7.0.2",
-    "vitest": "4.1.11"
+    "vitest": "4.1.10"
   },
   "packageManager": "pnpm@10.34.5"
 }

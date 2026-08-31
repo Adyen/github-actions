@@ -1,0 +1,13 @@
+allowBuilds:
+  core-js: false
+
+minimumReleaseAge: 30240 # 21 days, as per policy
+
+minimumReleaseAgeExclude:
+  - "@adyen/*"
+
+saveExact: true
+
+trustPolicy: no-downgrade
+
+verifyDepsBeforeRun: install
