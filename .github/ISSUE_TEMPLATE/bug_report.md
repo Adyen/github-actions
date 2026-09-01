@@ -10,7 +10,7 @@ assignees: ''
 
 Which action is affected, and at which version?
 
-- Action: `Adyen/github-actions-internal/<action>`
+- Action: `Adyen/github-actions/<action>`
 - Version / ref: <!-- e.g. v1, v1.2.0, or a commit SHA -->
 
 ## Description
@@ -39,7 +39,7 @@ The relevant part of the consuming workflow, with the action inputs used.
 steps:
   - uses: actions/checkout@v7
 
-  - uses: Adyen/github-actions-internal/<action>@<version>
+  - uses: Adyen/github-actions/<action>@<version>
     with:
       # inputs
 ```
@@ -61,4 +61,4 @@ Anything else that helps, such as when it last worked, recent version bumps, or 
 
 - [ ] I would like to open a pull request for this
 
-If so, see [CONTRIBUTING.md](https://github.com/Adyen/github-actions-internal/blob/main/CONTRIBUTING.md).
+If so, see [CONTRIBUTING.md](https://github.com/Adyen/github-actions/blob/main/CONTRIBUTING.md).

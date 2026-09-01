@@ -15,7 +15,7 @@ This repository provides shared automation that can be consumed from GitHub Acti
 Actions in this repository are referenced using:
 
 ```
-uses: Adyen/github-actions-internal/<action>@<version>
+uses: Adyen/github-actions/<action>@<version>
 ```
 
 For example:
@@ -24,7 +24,7 @@ For example:
 steps:
   - uses: actions/checkout@v7
 
-  - uses: Adyen/github-actions-internal/markdown-confluence-sync@v1
+  - uses: Adyen/github-actions/markdown-confluence-sync@v1
 ```
 
 See the README for each action for its supported inputs, outputs, permissions, and secrets.

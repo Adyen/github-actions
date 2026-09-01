@@ -67,7 +67,7 @@ jobs:
           fetch-depth: 0
 
       - name: Push documentation to Confluence
-        uses: Adyen/github-actions-internal/markdown-confluence-sync@main
+        uses: Adyen/github-actions/markdown-confluence-sync@main
 ```
 
 ### Example

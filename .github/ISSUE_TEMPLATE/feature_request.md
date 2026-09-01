@@ -8,7 +8,7 @@ assignees: ''
 
 ## Scope
 
-- [ ] Change to an existing action: `Adyen/github-actions-internal/<action>`
+- [ ] Change to an existing action: `Adyen/github-actions/<action>`
 - [ ] New reusable action
 
 ## Problem
@@ -40,7 +40,7 @@ Inputs, outputs, required permissions, and secrets you expect.
 steps:
   - uses: actions/checkout@v7
 
-  - uses: Adyen/github-actions-internal/<action>@<version>
+  - uses: Adyen/github-actions/<action>@<version>
     with:
       # inputs
 ```
@@ -64,4 +64,4 @@ Which repositories would consume this, and anything else that is relevant.
 
 - [ ] I would like to open a pull request for this
 
-If so, see [CONTRIBUTING.md](https://github.com/Adyen/github-actions-internal/blob/main/CONTRIBUTING.md).
+If so, see [CONTRIBUTING.md](https://github.com/Adyen/github-actions/blob/main/CONTRIBUTING.md).
