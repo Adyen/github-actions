@@ -1,9 +1,46 @@
+import { readFile } from 'node:fs/promises';
+
 import { updateConfluencePage } from './confluence-client';
-import { discoverConfluenceDocuments } from './documents';
+import { discoverConfluenceDocuments, findChangedMarkdownFiles } from './documents';
 import { markdownToConfluenceAdf, prependWarningBanner } from './markdown';
 
+interface PushEvent {
+  before?: unknown;
+}
+
+const isInitialPush = (revision: string) => /^0+$/.test(revision);
+
+/** Figures out which md files actually changed between revisions */
+const discoverDocumentsToSync = async () => {
+  const repositoryRoot = process.cwd();
+  if (process.env.GITHUB_EVENT_NAME !== 'push' || !process.env.GITHUB_EVENT_PATH) {
+    return discoverConfluenceDocuments(repositoryRoot);
+  }
+
+  const event = JSON.parse(await readFile(process.env.GITHUB_EVENT_PATH, 'utf8')) as PushEvent;
+  const baseRevision = event.before;
+  const headRevision = process.env.GITHUB_SHA;
+  if (typeof baseRevision !== 'string' || !headRevision || isInitialPush(baseRevision)) {
+    return discoverConfluenceDocuments(repositoryRoot);
+  }
+
+  try {
+    const changedMarkdownFiles = await findChangedMarkdownFiles(
+      repositoryRoot,
+      baseRevision,
+      headRevision,
+    );
+    return discoverConfluenceDocuments(repositoryRoot, changedMarkdownFiles);
+  } catch (error) {
+    const message = error instanceof Error ? error.message : `${error}`;
+    throw new Error(
+      `Unable to diff history of changed Markdown files. Ensure the checkout action uses fetch-depth: 0. ${message}`,
+    );
+  }
+};
+
 const syncDocumentationToConfluence = async () => {
-  const documents = await discoverConfluenceDocuments(process.cwd());
+  const documents = await discoverDocumentsToSync();
 
   await Promise.all(
     documents.map(async (document) => {
