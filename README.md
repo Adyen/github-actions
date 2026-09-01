@@ -1,4 +1,4 @@
-# Adyen Reusable GitHub Actions
+# Adyen Shared GitHub Actions
 
 Reusable GitHub Actions maintained for use across Adyen repositories.
 
