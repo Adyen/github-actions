@@ -54,12 +54,38 @@ const findTrackedMarkdownFiles = async (repositoryRoot: string): Promise<string[
 };
 
 /**
+ * Find markdown files added, copied, modified, or renamed between two revisions.
+ * Deleted files are intentionally excluded, since they cannot be synced.
+ */
+export const findChangedMarkdownFiles = async (
+  repositoryRoot: string,
+  baseRevision: string,
+  headRevision: string,
+): Promise<string[]> => {
+  const { stdout } = await execFileAsync(
+    'git',
+    ['diff', '--name-only', '-z', '--diff-filter=ACMR', baseRevision, headRevision, '--', '*.md'],
+    {
+      cwd: repositoryRoot,
+      encoding: 'utf8',
+    },
+  );
+
+  return stdout
+    .split('\0')
+    .filter(Boolean)
+    .map((filePath) => path.resolve(repositoryRoot, filePath))
+    .sort();
+};
+
+/**
  * Find only markdown with confluence frontmatter
  */
 export const discoverConfluenceDocuments = async (
   repositoryRoot: string,
+  sourcePaths?: string[],
 ): Promise<ConfluenceDocument[]> => {
-  const markdownFiles = await findTrackedMarkdownFiles(repositoryRoot);
+  const markdownFiles = sourcePaths ?? (await findTrackedMarkdownFiles(repositoryRoot));
   const documents = await Promise.all(
     markdownFiles.map(async (sourcePath) => {
       const markdown = await readFile(sourcePath, 'utf8');

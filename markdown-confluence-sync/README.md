@@ -62,6 +62,9 @@ jobs:
     steps:
       - name: Checkout the repository
         uses: actions/checkout@7
+        with:
+          # Required to compare history, and avoid unnecessary updates
+          fetch-depth: 0
 
       - name: Push documentation to Confluence
         uses: Adyen/github-actions-internal/markdown-confluence-sync@main
