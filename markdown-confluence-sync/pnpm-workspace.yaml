@@ -5,6 +5,8 @@ minimumReleaseAge: 30240 # 21 days, as per policy
 
 minimumReleaseAgeExclude:
   - "@adyen/*"
+  # Renovate security update: vitest@4.1.11
+  - vitest@4.1.11
 
 saveExact: true
 
