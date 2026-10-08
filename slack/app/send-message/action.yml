@@ -1,0 +1,69 @@
+name: Slack app send message
+description: Send a Slack message using a Slack app.
+
+inputs:
+  bot-token:
+    description: Slack bot token used to authenticate the app.
+    required: true
+  channel:
+    description: Slack conversation ID for the target channel or direct message.
+    required: true
+  message:
+    description: Message text.
+    required: true
+  thread-ts:
+    description: Timestamp of an existing Slack message to reply to.
+    required: false
+
+outputs:
+  thread-ts:
+    description: Timestamp of the posted message, for thread replies.
+    value: ${{ steps.send-message.outputs.thread-ts }}
+
+runs:
+  using: composite
+  steps:
+    - name: Send Slack message
+      id: send-message
+      shell: bash
+      env:
+        SLACK_BOT_TOKEN: ${{ inputs.bot-token }}
+        CHANNEL: ${{ inputs.channel }}
+        MESSAGE: ${{ inputs.message }}
+        THREAD_TS: ${{ inputs.thread-ts }}
+      run: |
+        PAYLOAD=$(jq -n \
+          --arg channel "$CHANNEL" \
+          --arg text "$MESSAGE" \
+          --arg thread_ts "$THREAD_TS" \
+          'if $thread_ts != "" then {channel: $channel, text: $text, thread_ts: $thread_ts} else {channel: $channel, text: $text} end')
+
+        MAX_RETRIES=3
+        ATTEMPT=0
+
+        while [ $ATTEMPT -lt $MAX_RETRIES ]; do
+          ATTEMPT=$((ATTEMPT + 1))
+
+          HTTP_STATUS=$(curl -sS -D /tmp/slack-headers.txt -o /tmp/slack-response.txt \
+            -w "%{http_code}" -X POST "https://slack.com/api/chat.postMessage" \
+            -H "Authorization: Bearer $SLACK_BOT_TOKEN" \
+            -H "Content-Type: application/json" \
+            -d "$PAYLOAD")
+          RESPONSE=$(cat /tmp/slack-response.txt)
+
+          if [ "$HTTP_STATUS" == "200" ] && [ "$(echo "$RESPONSE" | jq -r '.ok')" == "true" ]; then
+            echo "thread-ts=$(echo "$RESPONSE" | jq -r '.ts')" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+
+          if [ "$HTTP_STATUS" == "429" ] && [ $ATTEMPT -lt $MAX_RETRIES ]; then
+            RETRY_AFTER=$(awk 'tolower($1) == "retry-after:" {print $2}' /tmp/slack-headers.txt | tr -d '\r')
+            WAIT=${RETRY_AFTER:-4}
+            echo "Rate limited. Waiting ${WAIT}s before retry (attempt $ATTEMPT/$MAX_RETRIES)..."
+            sleep "$WAIT"
+          else
+            ERROR=$(echo "$RESPONSE" | jq -r '.error // "unknown_error"')
+            echo "Slack API error (HTTP $HTTP_STATUS): $ERROR"
+            exit 1
+          fi
+        done

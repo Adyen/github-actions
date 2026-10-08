@@ -9,6 +9,8 @@ This repository provides shared automation that can be consumed from GitHub Acti
 | Action | Description |
 | :---- | :---- |
 | [`markdown-confluence-sync`](./markdown-confluence-sync) | Sync Markdown documentation to Confluence. |
+| [`slack/app/send-message`](./slack/app/send-message) | Send a Slack message using a Slack app. |
+| [`slack/webhook/send-message`](./slack/webhook/send-message) | Send a Slack message using an incoming webhook. |
 
 ## Usage
 
