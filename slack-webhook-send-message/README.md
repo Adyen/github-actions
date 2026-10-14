@@ -13,7 +13,7 @@ Create an incoming webhook for the target Slack channel and store its URL as a G
 ```yaml
 steps:
   - name: Send Slack message
-    uses: Adyen/github-actions/slack/webhook/send-message@main
+    uses: Adyen/github-actions/slack-webhook-send-message@main
     with:
       webhook-url: ${{ secrets.SLACK_WEBHOOK_URL }}
       message: Deployment completed successfully.

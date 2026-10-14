@@ -20,14 +20,14 @@ Store the app's bot token as a GitHub Actions secret. Do not add the token to wo
 steps:
   - name: Send Slack message
     id: slack-message
-    uses: Adyen/github-actions/slack/app/send-message@main
+    uses: Adyen/github-actions/slack-app-send-message@main
     with:
       bot-token: ${{ secrets.SLACK_BOT_TOKEN }}
       channel: ${{ vars.SLACK_CHANNEL_ID }}
       message: Release completed successfully.
 
   - name: Reply in thread
-    uses: Adyen/github-actions/slack/app/send-message@main
+    uses: Adyen/github-actions/slack-app-send-message@main
     with:
       bot-token: ${{ secrets.SLACK_BOT_TOKEN }}
       channel: ${{ vars.SLACK_CHANNEL_ID }}
