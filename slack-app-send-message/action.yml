@@ -1,0 +1,34 @@
+name: Slack app send message
+description: Send a Slack message using a Slack app.
+
+inputs:
+  bot-token:
+    description: Slack bot token used to authenticate the app.
+    required: true
+  channel:
+    description: Slack conversation ID for the target channel or direct message.
+    required: true
+  message:
+    description: Message text.
+    required: true
+  thread-ts:
+    description: Timestamp of an existing Slack message to reply to.
+    required: false
+
+outputs:
+  thread-ts:
+    description: Timestamp of the posted message, for thread replies.
+    value: ${{ steps.send-message.outputs.thread-ts }}
+
+runs:
+  using: composite
+  steps:
+    - name: Send Slack message
+      id: send-message
+      shell: bash
+      env:
+        SLACK_BOT_TOKEN: ${{ inputs.bot-token }}
+        CHANNEL: ${{ inputs.channel }}
+        MESSAGE: ${{ inputs.message }}
+        THREAD_TS: ${{ inputs.thread-ts }}
+      run: bash "$GITHUB_ACTION_PATH/send-message.sh"
