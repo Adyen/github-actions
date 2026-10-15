@@ -1,3 +1,9 @@
+---
+confluence_page_id: 1039761482
+title: "Slack app send message"
+---
+
+
 # Slack app send message
 
 Send a message to a Slack channel using a Slack app and the Slack `chat.postMessage` API.
