@@ -12,7 +12,7 @@ inputs:
     description: Message text. Supports Slack mrkdwn formatting.
     required: true
   thread-ts:
-    description: Timestamp of an existing Slack message to reply to.
+    description: Timestamp of an existing Slack message to reply to. Leave empty to post a new message.
     required: false
 
 outputs:

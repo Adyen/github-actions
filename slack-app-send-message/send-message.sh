@@ -38,7 +38,7 @@ while [ $ATTEMPT -lt $MAX_RETRIES ]; do
   if [ "$HTTP_STATUS" == "429" ] && [ $ATTEMPT -lt $MAX_RETRIES ]; then
     RETRY_AFTER=$(awk 'tolower($1) == "retry-after:" {print $2}' "$HEADERS_FILE" | tr -d '\r')
     WAIT=${RETRY_AFTER:-4}
-    echo "Rate limited. Waiting ${WAIT}s before retry (attempt $ATTEMPT/$MAX_RETRIES)..."
+    echo "Slack rate limited the request. Waiting ${WAIT}s before retry (attempt $ATTEMPT/$MAX_RETRIES)..."
     sleep "$WAIT"
   else
     ERROR=$(echo "$RESPONSE" | jq -r '.error // "unknown_error"')
