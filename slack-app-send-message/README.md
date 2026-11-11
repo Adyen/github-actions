@@ -18,7 +18,7 @@ The Slack app must:
 - be installed in the target Slack workspace;
 - have access to the target channel (invite the app to private channels).
 
-Store the app's bot token as a GitHub Actions secret. Do not add the token to workflow files.
+Store the app's bot token (it starts with `xoxb-`) as a GitHub Actions secret. Do not add the token to workflow files.
 
 ## Usage
 
@@ -56,4 +56,4 @@ Pin the action to a commit SHA instead of `main` in production workflows.
 
 | Output | Description |
 | --- | --- |
-| `thread-ts` | Timestamp of the posted message, for thread replies. |
+| `thread-ts` | Timestamp of the posted message. Pass it to `thread-ts` in a later step to reply in the thread. |

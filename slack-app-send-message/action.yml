@@ -17,7 +17,7 @@ inputs:
 
 outputs:
   thread-ts:
-    description: Timestamp of the posted message, for thread replies.
+    description: Timestamp of the posted message. Pass it to thread-ts in a later step to reply in the thread.
     value: ${{ steps.send-message.outputs.thread-ts }}
 
 runs:

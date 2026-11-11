@@ -32,6 +32,7 @@ while [ $ATTEMPT -lt $MAX_RETRIES ]; do
 
   if [ "$HTTP_STATUS" == "200" ] && [ "$(echo "$RESPONSE" | jq -r '.ok')" == "true" ]; then
     echo "thread-ts=$(echo "$RESPONSE" | jq -r '.ts')" >> "$GITHUB_OUTPUT"
+    echo "Slack message posted to channel $CHANNEL."
     exit 0
   fi
 
