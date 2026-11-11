@@ -32,17 +32,18 @@ while [ $ATTEMPT -lt $MAX_RETRIES ]; do
 
   if [ "$HTTP_STATUS" == "200" ] && [ "$(echo "$RESPONSE" | jq -r '.ok')" == "true" ]; then
     echo "thread-ts=$(echo "$RESPONSE" | jq -r '.ts')" >> "$GITHUB_OUTPUT"
+    echo "Slack message posted to channel $CHANNEL."
     exit 0
   fi
 
   if [ "$HTTP_STATUS" == "429" ] && [ $ATTEMPT -lt $MAX_RETRIES ]; then
     RETRY_AFTER=$(awk 'tolower($1) == "retry-after:" {print $2}' "$HEADERS_FILE" | tr -d '\r')
     WAIT=${RETRY_AFTER:-4}
-    echo "Rate limited. Waiting ${WAIT}s before retry (attempt $ATTEMPT/$MAX_RETRIES)..."
+    echo "Slack rate limited the request. Waiting ${WAIT}s before retry (attempt $ATTEMPT/$MAX_RETRIES)..."
     sleep "$WAIT"
   else
     ERROR=$(echo "$RESPONSE" | jq -r '.error // "unknown_error"')
-    echo "Slack API error (HTTP $HTTP_STATUS): $ERROR"
+    echo "Slack API error (HTTP $HTTP_STATUS, attempt $ATTEMPT/$MAX_RETRIES): $ERROR"
     exit 1
   fi
 done
