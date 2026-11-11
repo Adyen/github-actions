@@ -9,7 +9,7 @@ inputs:
     description: Slack conversation ID for the target channel or direct message.
     required: true
   message:
-    description: Message text.
+    description: Message text. Supports Slack mrkdwn formatting.
     required: true
   thread-ts:
     description: Timestamp of an existing Slack message to reply to.

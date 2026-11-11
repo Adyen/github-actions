@@ -42,7 +42,7 @@ while [ $ATTEMPT -lt $MAX_RETRIES ]; do
     sleep "$WAIT"
   else
     ERROR=$(echo "$RESPONSE" | jq -r '.error // "unknown_error"')
-    echo "Slack API error (HTTP $HTTP_STATUS): $ERROR"
+    echo "Slack API error (HTTP $HTTP_STATUS, attempt $ATTEMPT/$MAX_RETRIES): $ERROR"
     exit 1
   fi
 done

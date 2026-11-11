@@ -49,7 +49,7 @@ Pin the action to a commit SHA instead of `main` in production workflows.
 | --- | --- | --- |
 | `bot-token` | Yes | Slack bot token used to authenticate the app. |
 | `channel` | Yes | Slack conversation ID for the target channel or direct message. |
-| `message` | Yes | Message text. |
+| `message` | Yes | Message text. Supports Slack mrkdwn formatting. |
 | `thread-ts` | No | Timestamp of an existing Slack message to reply to. |
 
 ## Outputs
