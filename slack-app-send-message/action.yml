@@ -9,15 +9,15 @@ inputs:
     description: Slack conversation ID for the target channel or direct message.
     required: true
   message:
-    description: Message text.
+    description: Message text. Supports Slack mrkdwn formatting.
     required: true
   thread-ts:
-    description: Timestamp of an existing Slack message to reply to.
+    description: Timestamp of an existing Slack message to reply to. Leave empty to post a new message.
     required: false
 
 outputs:
   thread-ts:
-    description: Timestamp of the posted message, for thread replies.
+    description: Timestamp of the posted message. Pass it to thread-ts in a later step to reply in the thread.
     value: ${{ steps.send-message.outputs.thread-ts }}
 
 runs:
